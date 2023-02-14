@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package filePackage;
+
+message UploadRequest {
+  string fileName = 1;
+  bytes content = 2;
+  bool overwrite = 3;
+}
+
+message UploadResponse {
+  bool success = 1;
+  string fileName = 2;
+}
+
+message DownloadRequest {
+  string fileName = 1;
+}
+
+message DownloadResponse {
+  bytes content = 1;
+}
+
+message ReadRequest {}
+
+message ReadResponse {
+  string fileName = 1;
+}
+
+message RemoveRequest {
+  string fileName = 1;
+}
+
+message RemoveResponse {
+  bool success = 1;
+}
+
+service FileService {
+    rpc Upload (UploadRequest) returns (UploadResponse);
+    rpc Download (DownloadRequest) returns (stream DownloadResponse);
+    rpc Read (ReadRequest) returns (stream ReadResponse);
+    rpc Remove (RemoveRequest) returns (RemoveResponse);
+}
+  
